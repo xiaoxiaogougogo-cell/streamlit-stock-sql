@@ -1,6 +1,14 @@
+import os
+import streamlit as st
+#st.write(os listdir())
+st.title("My Stock Dashboard")
+
+st.write("App is running...")
+
+
 import pandas as pd
 
-import streamlit as st
+
 from datetime import datetime
 st.write("Last refresh:", datetime.now())
 
@@ -13,8 +21,8 @@ from db import init_db, insert_data
 st.title("📊 Live Trading Dashboard (SQLite)")
 
 init_db()
-
-df = pd.read_excel("C:/Users/Lenovo/Desktop/watchdog/stock project/db/data.xlsx")
+data = "C:/Users/Lenovo/Desktop/watchdog/stock project/db/data.xlsx"
+df = pd.read_excel("data.xlsx")
 df.to_parquet("data.parquet")
 
 
