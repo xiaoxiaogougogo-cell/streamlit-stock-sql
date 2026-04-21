@@ -16,14 +16,6 @@ from streamlit_autorefresh import st_autorefresh
 st_autorefresh(interval=10000)
 
 
-################
-import os
-
-BASE_DIR = os.path.dirname(__file__
-
-db_path = os.path.join(BASE_DIR, "data.db")
-
-conn = sqlite3.connect(db_path)
 
 
 
