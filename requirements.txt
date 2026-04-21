@@ -1,22 +1,36 @@
 pandas
 
+
+
 yfinance
+
+
 
 streamlit
 
-sqlite3
+
 
 matplotlib
 
+
+
 pyarrow
+
+
 
 numpy
 
-datetime
 
-streamlit_autorefresh
 
-time
+streamlit-autorefresh
+
+plotly
+
+
+
+openpyxl
+
+
 
 
 

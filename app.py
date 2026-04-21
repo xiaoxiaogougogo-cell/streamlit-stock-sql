@@ -670,6 +670,96 @@ st.title("💰 Paper Trading System (Live)")
 
 
 
+
+
+
+
+#multi-ticker issues
+
+if "ticker" not in st.session_state:
+
+
+
+    st.session_state.ticker = "AAPL"
+
+
+
+ticker = st.text_input(
+
+
+
+    "Ticker",
+
+
+
+    st.session_state.ticker,
+
+
+
+    key="main_ticker"
+
+
+
+)
+
+
+
+st.session_state.ticker = ticker
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mode = st.sidebar.selectbox("Mode", ["Live", "Backtest", "Paper"])
+
+
+
+if mode == "Live":
+
+
+
+    import live
+
+
+
+    live.run()
+
+
+
+elif mode == "Backtest":
+
+
+
+    import backtest
+
+
+
+    backtest.run()
+#######################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ticker = st.text_input("Ticker", "AAPL")
 
 
@@ -698,15 +788,15 @@ metrics = st.empty()
 
 
 
-while True:
 
 
 
-    live = fetch_live_price(ticker)
+
+live = fetch_live_price(ticker)
 
 
 
-    df = pd.read_sql(
+df = pd.read_sql(
 
 
 
@@ -726,15 +816,15 @@ while True:
 
 
 
-    df["time"] = pd.to_datetime(df["time"])
+df["time"] = pd.to_datetime(df["time"])
 
 
 
-    df = df.dropna()
+df = df.dropna()
 
 
 
-    price = live["price"]
+price = live["price"]
 
 
 
@@ -750,7 +840,7 @@ while True:
 
 
 
-    if len(df) > 20:
+if len(df) > 20:
 
 
 
@@ -830,31 +920,31 @@ while True:
 
 
 
-    metrics.metric("Capital", round(trader.capital, 2))
+metrics.metric("Capital", round(trader.capital, 2))
 
 
 
-    metrics.metric("Current Price", price)
+metrics.metric("Current Price", price)
 
 
 
-    trades_df = pd.read_sql("SELECT * FROM trades", conn)
+trades_df = pd.read_sql("SELECT * FROM trades", conn)
 
 
 
-    trade_log.write("### Trade History")
+trade_log.write("### Trade History")
 
 
 
-    trade_log.dataframe(trades_df.tail(10))
+trade_log.dataframe(trades_df.tail(10))
 
 
 
-    chart.line_chart(df.set_index("time")["price"])
+chart.line_chart(df.set_index("time")["price"])
 
 
 
-    time.sleep(5)
+time.sleep(5)
 
 st.dataframe(df)
 
