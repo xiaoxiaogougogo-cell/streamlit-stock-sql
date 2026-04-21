@@ -14,5 +14,9 @@ numpy
 
 datetime
 
+streamlit_autorefresh
+
+time
+
 
 
