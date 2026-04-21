@@ -16,6 +16,22 @@ from streamlit_autorefresh import st_autorefresh
 st_autorefresh(interval=10000)
 
 
+################
+import os
+
+BASE_DIR = os.path.dirname(__file__
+
+db_path = os.path.join(BASE_DIR, "data.db")
+
+conn = sqlite3.connect(db_path)
+
+
+
+
+
+
+
+
 from db import init_db, insert_data
 
 st.title("📊 Live Trading Dashboard (SQLite)")
@@ -292,6 +308,22 @@ st.write("### Latest Signals")
 
 
 st.dataframe(df.tail(20))
+
+
+
+
+###########################3tempr
+st.write(df.tail())
+
+st.write(df.columns)
+
+
+
+
+
+
+
+
 
 
 #live trading-live pricing
