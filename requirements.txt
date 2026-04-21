@@ -5,3 +5,10 @@ yfinance
 streamlit
 
 sqlite3
+
+matplotlib
+
+pyarrow
+
+numpy
+
