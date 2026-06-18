@@ -1,36 +1,31 @@
-pandas
-
-
-
-yfinance
-
-
 
 streamlit
-
-
-
-matplotlib
-
-
-
-pyarrow
-
-
-
+fastapi
+uvicorn
+psycopg2-binary
+redis
+pandas
 numpy
-
-
-
-streamlit-autorefresh
-
-plotly
-
-
-
+yfinance
+vectorbt
 openpyxl
+streamlit-autorefresh
+alpaca-py
+requests
 
 
+flask
+kafka-python
+boto3
 
 
+alpaca-trade-api
+scikit-learn
 
+
+xgboost
+websocket-client
+
+
+prometheus-client
+python-dotenv

@@ -1,0 +1,82 @@
+
+services:
+
+
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: paper-app
+
+    ports:
+      - "8501:8501"
+
+    restart: unless-stopped
+
+
+
+
+  postgres:
+    image: postgres:15
+
+    container_name: postgres-db
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: trader
+      POSTGRES_PASSWORD: strongpassword
+      POSTGRES_DB: trading
+
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+
+    container_name: redis-cache
+
+    restart: unless-stopped
+
+  
+
+  pgadmin:
+    image: dpage/pgadmin4
+
+    container_name: pgadmin
+
+    restart: unless-stopped
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@test.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+   
+    
+    ports:
+      - "5050:80"
+ 
+
+
+  
+  backend:
+    build: ./backend
+
+    container_name: backend-app
+
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+    restart: unless-stopped
+
+    env_file:
+      - ./.env
+
+    ports:
+      - "8000:8000"  
+
+
+  
+volumes:
+  postgres_data:
