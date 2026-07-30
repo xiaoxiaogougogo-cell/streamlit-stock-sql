@@ -1,15 +1,14 @@
 import os
 import streamlit as st
-#st.write(os listdir())
 
-#st.write("App is running...")
+
 
 
 import pandas as pd
 
 
 from datetime import datetime
-#st.write("Last refresh:", datetime.now())
+st.write("Last refresh:", datetime.now())
 
 from streamlit_autorefresh import st_autorefresh
 st_autorefresh(interval=10000)
@@ -31,7 +30,8 @@ from db import get_connection, init_trades_table
 
 from db import get_connection, insert_live_price
 
-from live_prices import fetch_live_price
+from backend.app.live_prices import fetch_live_price
+
 
 
 
@@ -84,11 +84,6 @@ while True:
 
 
     live = fetch_live_price(ticker)
-
-    if live is None:
-      st.warning("No live data available.")
-      time.sleep(5)
-      continue
 
 
 

@@ -1,0 +1,113 @@
+name: streamlit-stock-sql
+services:
+  backend:
+    build:
+      context: /root/streamlit-stock-sql/backend
+      dockerfile: Dockerfile
+    command:
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    container_name: backend-app
+    depends_on:
+      postgres:
+        condition: service_started
+        required: true
+      redis:
+        condition: service_started
+        required: true
+    environment:
+      ALPACA_API_KEY: ""
+      ALPACA_SECRET_KEY: ""
+      API_DEBUG: "false"
+      API_ENV: production
+      IBKR_HOST: ""
+      IBKR_PORT: ""
+      LOG_LEVEL: INFO
+      POSTGRES_DB: trading
+      POSTGRES_HOST: postgres-db
+      POSTGRES_PASSWORD: strongpassword
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: trader
+      REDIS_HOST: redis-cache
+      REDIS_PORT: "6379"
+      SECRET_KEY: replace_with_long_random_string
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8000
+        published: "8000"
+        protocol: tcp
+    restart: unless-stopped
+  dashboard:
+    build:
+      context: /root/streamlit-stock-sql
+      dockerfile: Dockerfile
+    container_name: paper-app
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8501
+        published: "8501"
+        protocol: tcp
+    restart: unless-stopped
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@test.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    image: dpage/pgadmin4
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "5050"
+        protocol: tcp
+    restart: unless-stopped
+  postgres:
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: trading
+      POSTGRES_PASSWORD: strongpassword
+      POSTGRES_USER: trader
+    image: postgres:15
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+        volume: {}
+  redis:
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+    container_name: redis-cache
+    image: redis:7
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 6379
+        published: "6379"
+        protocol: tcp
+    restart: unless-stopped
+networks:
+  default:
+    name: streamlit-stock-sql_default
+volumes:
+  postgres_data:
+    name: streamlit-stock-sql_postgres_data

@@ -9,3 +9,5 @@ python-dotenv
 asyncpg
 prometheus-client
 slowapi
+yfinance
+pandas
